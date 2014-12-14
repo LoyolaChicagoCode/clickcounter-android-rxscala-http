@@ -23,13 +23,12 @@ scalacOptions in Compile ++= Seq("-feature", "-unchecked", "-deprecation")
 platformTarget in Android := "android-19"
 
 libraryDependencies ++= Seq(
-  "org.robolectric" % "robolectric" % "2.3" % "test",
-  "junit" % "junit" % "4.11" % "test",
-  "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test",
-  "org.scalatest" %% "scalatest" % "2.2.1" % "test",
-  "com.netflix.rxjava" % "rxjava-core" % "0.20.7",
-  "com.netflix.rxjava" % "rxjava-scala" % "0.20.7",
-  "com.netflix.rxjava" % "rxjava-android" % "0.20.7"
+  "org.robolectric" % "robolectric" % "2.3" % Test,
+  "junit" % "junit" % "4.11" % Test,
+  "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % Test,
+  "org.scalatest" %% "scalatest" % "2.2.1" % Test,
+  "io.reactivex" %% "rxscala" % "0.23.0",
+  "io.reactivex" % "rxapache-http" % "0.21.0"
 )
 
 val androidJars = (platformJars in Android, baseDirectory) map {
