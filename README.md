@@ -11,17 +11,17 @@ develop HTTP-based Android client applications using RxScala and
 Volley. Its learning objectives are:
 
 - Android application development using Scala
-    - using the Simple Build Tool (sbt) for Scala in conjunction with 
+    - Using the Simple Build Tool (sbt) for Scala in conjunction with
       [pfn's well-maintained plugin](https://github.com/pfn/android-sdk-plugin)
-    - using IntelliJ IDEA
+    - Using IntelliJ IDEA
+	- Restful HTTP client functionality using [Volley](http://developer.android.com/training/volley)
+	- Parsing JSON responses using [org.json](http://developer.android.com/reference/org/json/package-summary.html)
+	  included with Android
 - Android application architecture for testability and maintainability
     - [Dependency Inversion Principle (DIP)](http://en.wikipedia.org/wiki/Dependency_inversion_principle)
     - [Model-View-Adapter](http://en.wikipedia.org/wiki/Model-view-adapter) architectural pattern
     - Separation of Android activity into event-handling and lifecycle management
     - Separation of stateful and reactive components using [RxScala](http://rxscala.github.io)
-	- Restful HTTP client functionality using [Volley](http://developer.android.com/training/volley)
-	- Parsing JSON responses using [org.json](http://developer.android.com/reference/org/json/package-summary.html)
-	  included with Android
 - Effective testing
     - Unit testing and [Behavior-Driven Development (BDD)](http://en.wikipedia.org/wiki/Behavior-driven_development) 
       with ScalaTest
