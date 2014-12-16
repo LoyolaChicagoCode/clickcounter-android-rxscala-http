@@ -1,11 +1,14 @@
+<!---
 [![Build Status](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala) 
 [![Coverage Status](https://img.shields.io/coveralls/LoyolaChicagoCode/clickcounter-android-rxscala.svg)](https://coveralls.io/r/LoyolaChicagoCode/clickcounter-android-rxscala) 
 [![Download](https://api.bintray.com/packages/loyolachicagocode/generic/clickcounter-android-rxscala/images/download.svg) ](https://bintray.com/loyolachicagocode/generic/clickcounter-android-rxscala/_latestVersion)
+-->
 
 # Learning Objectives
 
-This example is intended as a starting point for anyone planning develop
-*reactive* Android applications using Scala. Its learning objectives are:
+This example is intended as a starting point for anyone planning
+develop HTTP-based Android client applications using RxScala and
+Volley. Its learning objectives are:
 
 - Android application development using Scala
     - using the Simple Build Tool (sbt) for Scala in conjunction with 
@@ -16,6 +19,9 @@ This example is intended as a starting point for anyone planning develop
     - [Model-View-Adapter](http://en.wikipedia.org/wiki/Model-view-adapter) architectural pattern
     - Separation of Android activity into event-handling and lifecycle management
     - Separation of stateful and reactive components using [RxScala](http://rxscala.github.io)
+	- Restful HTTP client functionality using [Volley](http://developer.android.com/training/volley)
+	- Parsing JSON responses using [org.json](http://developer.android.com/reference/org/json/package-summary.html)
+	  included with Android
 - Effective testing
     - Unit testing and [Behavior-Driven Development (BDD)](http://en.wikipedia.org/wiki/Behavior-driven_development) 
       with ScalaTest
