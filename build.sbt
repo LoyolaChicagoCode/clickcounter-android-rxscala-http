@@ -27,8 +27,9 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.11" % Test,
   "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % Test,
   "org.scalatest" %% "scalatest" % "2.2.1" % Test,
+  "com.mcxiaoke.volley" % "library" % "1.0.9",
   "io.reactivex" %% "rxscala" % "0.23.0",
-  "io.reactivex" % "rxapache-http" % "0.21.0"
+  "io.reactivex" % "rxandroid" % "0.23.0"
 )
 
 val androidJars = (platformJars in Android, baseDirectory) map {
@@ -55,7 +56,14 @@ proguardOptions in Android ++= Seq(
   "-keepclassmembers class * extends junit.framework.TestCase { *; }"
 )
 
-apkbuildExcludes in Android += "LICENSE.txt"
+apkbuildExcludes in Android ++= Seq(
+  "LICENSE.txt",
+  "META-INF/DEPENDENCIES",
+  "META-INF/LICENSE",
+  "META-INF/LICENSE.txt",
+  "META-INF/NOTICE",
+  "META-INF/NOTICE.txt"
+)
 
 // The next few lines will work only with sbt-scoverage version 0.99.7.1.
 // Do not update until sbt-scoverage 1.0 stabilizes!

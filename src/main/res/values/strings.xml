@@ -1,11 +1,14 @@
 <resources>
 
-    <string name="app_name">clickcounter-android-rxscala</string>
+    <string name="app_name">clickcounter-android-rxscala-http</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_click_counter">Reactive Click Counter</string>
+    <string name="title_activity_click_counter">Remote Click Counter Client</string>
 
     <string name="label_increment">+</string>
     <string name="label_reset">0</string>
     <string name="label_decrement">-</string>
+
+    <string name="counter_service_url">http://private-14b8e-clickcounter.apiary-mock.com</string>
+    <string name="counter_id">123</string>
 
 </resources>

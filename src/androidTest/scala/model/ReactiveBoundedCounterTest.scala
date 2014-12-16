@@ -1,4 +1,4 @@
-package edu.luc.etl.cs313.scala.rxclickcounter.model
+package edu.luc.etl.cs313.scala.httpclickcounter.model
 
 import scala.language.reflectiveCalls
 import org.scalatest.{Matchers, WordSpec}
@@ -13,7 +13,7 @@ class ReactiveBoundedCounterTest extends WordSpec with Matchers with MockFactory
   val min = 0
   val max = 5
 
-  def fixture = new ReactiveBoundedCounter(min, max)
+  def fixture = new BoundedCounterHttpProxy(min, max)
 
   "A reactive bounded counter" when {
     "ever" should {

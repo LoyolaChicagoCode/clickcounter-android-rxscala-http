@@ -1,4 +1,4 @@
-package edu.luc.etl.cs313.scala.rxclickcounter
+package edu.luc.etl.cs313.scala.httpclickcounter
 package ui
 
 import android.view.View
