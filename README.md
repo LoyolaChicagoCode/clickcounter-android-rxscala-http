@@ -31,7 +31,7 @@ Volley. Its learning objectives are:
 
 # Building and Running
 
-Please refer to [these notes](http://lucoodevcourse.github.io/notes/scalaandroiddev.html) for details.
+Please refer to [these notes](https://github.com/LoyolaChicagoBooks/lucoodevcourse/blob/master/source/scalaandroiddev.rst) for details.
 
 # References
 
