@@ -39,7 +39,7 @@ class HttpPostObserver(resourceUrl: String) extends Observer[String] {
   }
 }
 
-/** First attempt at an observable for an event source of server-sent events (SSE). */
+/** First attempt at an observable for a source of server-sent events (SSE). */
 object HttpEventSourceObservable {
 
   private val TAG = "edu.luc.etl.rx.android.http.HttpPostObserver"
@@ -51,19 +51,29 @@ object HttpEventSourceObservable {
   /** Android-supplied EC for the futures. */
   implicit val exec = ExecutionContext.fromExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
+  /**
+   * Returns an observable view on a source of server-sent events.
+   * Assumes an infinite stream and keeps reconnecting when
+   * reading fails. Events might get repeated on reconnect.
+   * 
+   * @param resourceUrl the URL of the event source
+   * @param bufferSize the size of the read buffer
+   * @param um the unmarshaler
+   * @tparam T the type of the unmarshaled events
+   * @return the observable
+   */
   def getObservable[T](resourceUrl: String, bufferSize: Int = 1024)(implicit um: String => Option[T]): Observable[T] = {
     val buffer = new Array[Byte](bufferSize)
     val subject = Subject[T]
 
     future {
       while (true) {
-        var urlConnection: HttpURLConnection = null
+        Log.d(TAG, "opening connection to " + resourceUrl)
+        val urlConnection = HttpURLConnection(resourceUrl)
+        Log.d(TAG, "getting input stream")
+        val is = urlConnection.getInputStream
+        Log.d(TAG, "type of input stream is " + is.getClass.toString)
         try {
-          Log.d(TAG, "opening connection to " + resourceUrl)
-          urlConnection = HttpURLConnection(resourceUrl)
-          Log.d(TAG, "getting input stream")
-          val is = urlConnection.getInputStream
-          Log.d(TAG, "type of input stream is " + is.getClass.toString)
           while (true) {
             Log.d(TAG, "attempting to read")
             val bytesRead = is.read(buffer)
