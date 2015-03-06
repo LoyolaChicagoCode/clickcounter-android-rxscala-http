@@ -12,7 +12,7 @@ organization := "lucoodevcourse"
 
 name := "clickcounter-android-rxscala"
 
-version := "0.2"
+version := "0.3"
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
@@ -22,14 +22,17 @@ scalacOptions in Compile ++= Seq("-feature", "-unchecked", "-deprecation")
 
 platformTarget in Android := "android-19"
 
+resolvers += "Local Maven Repository" at "file://" + Path.userHome + "/.m2/repository"
+
+//resolvers += "laufer@bintray" at "http://dl.bintray.com/laufer/maven"
+
 libraryDependencies ++= Seq(
   "org.robolectric" % "robolectric" % "2.3" % Test,
   "junit" % "junit" % "4.11" % Test,
   "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % Test,
-  "org.scalatest" %% "scalatest" % "2.2.1" % Test,
-  "com.mcxiaoke.volley" % "library" % "1.0.9",
-  "io.reactivex" %% "rxscala" % "0.23.0",
-  "io.reactivex" % "rxandroid" % "0.23.0"
+  "org.scalatest" %% "scalatest" % "2.2.4" % Test,
+  "io.reactivex" %% "rxscala" % "0.23.1",
+  "io.reactivex" % "rxandroid" % "0.24.0"
 )
 
 val androidJars = (platformJars in Android, baseDirectory) map {

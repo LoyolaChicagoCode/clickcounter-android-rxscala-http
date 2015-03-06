@@ -1,10 +1,10 @@
 package edu.luc.etl.cs313.scala.httpclickcounter
 package ui
 
+import android.app.Activity
+import android.util.Log
 import android.view.View
-
 import rx.lang.scala._
-
 import model._
 
 /**
@@ -38,16 +38,22 @@ trait ObservableView {
  * It maps semantic update events to actual view changes visible
  * to the user.
  */
-trait ViewUpdater extends Observer[(Int, ModelState)] with TypedViewHolder {
+trait ViewUpdater extends Activity with Observer[(Int, ModelState)] with TypedViewHolder {
 
-  /** Updates the concrete view from a model response event. */
-  override def onNext(arg: (Int, ModelState)): Unit = {
-    val (value, state) = arg
-    // update counter value display
-    findView(TR.textview_value).setText(value.toString)
-    // afford (enable/disable) controls according to abstract model state
-    findView(TR.button_increment).setEnabled(state != Full)
-    findView(TR.button_decrement).setEnabled(state != Empty)
-  }
+  private def TAG = "clickcounter-android-rxscala-http" // FIXME centralize
+
+  /** Updates the concrete view from a model response event. Must run on UI thread. */
+  override def onNext(arg: (Int, ModelState)): Unit = runOnUiThread(new Runnable {
+    override def run(): Unit = {
+      val (value, state) = arg
+      Log.d(TAG, "view updater received " + arg)
+      // update counter value display
+      findView(TR.textview_value).setText(value.toString)
+      // afford (enable/disable) controls according to abstract model state
+      findView(TR.button_increment).setEnabled(state != Full)
+      findView(TR.button_decrement).setEnabled(state != Empty)
+      Log.d(TAG, "done updating view" + arg)
+    }
+  })
 }
 

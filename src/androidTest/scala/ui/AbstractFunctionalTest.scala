@@ -9,9 +9,9 @@ import org.junit.Test
  */
 trait AbstractFunctionalTest {
 
-  /**
-   * The activity to be provided by concrete subclasses of this test.
-   */
+  // FIXME rethink this test suite in the presence asynchrony
+
+  /** The activity to be provided by concrete subclasses of this test. */
   protected def activity: MainActivity
 
   @Test def testActivityExists(): Unit = {
