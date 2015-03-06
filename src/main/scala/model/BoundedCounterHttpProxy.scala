@@ -1,13 +1,9 @@
-package edu.luc.etl.cs313.scala.httpclickcounter
-package model
+package edu.luc.etl.cs313.scala.httpclickcounter.model
 
-import java.net.{URL, HttpURLConnection}
-import android.os.AsyncTask
-import android.util.Log
 import org.json.JSONObject
 import rx.lang.scala._
-import scala.concurrent.future
-import scala.concurrent.ExecutionContext
+import scala.util.Try
+import edu.luc.etl.rx.android.http._
 
 /** A semantic input event. */
 trait InputEvent
@@ -24,23 +20,19 @@ case object Full extends ModelState
 /** An HTTP-based proxy for a RESTful bounded counter service. */
 class BoundedCounterHttpProxy(serviceUrl: String, counterId: String) extends Observer[InputEvent] {
 
-  /** Android-supplied EC for the futures. */
-  implicit val exec = ExecutionContext.fromExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+  /** The observable through which this counter emits response events. */
+  def observable: Observable[(Int, ModelState)] = eventSource
 
-  /** The internal subject for emitting response events. */
-  private lazy val subject = Subject[(Int, ModelState)]
+  /** The observable for the server-sent events. */
+  lazy val eventSource =
+    HttpEventSourceObservable.getObservable[(Int, ModelState)](
+      serviceUrl + "/counters/" + counterId + "/stream")
 
-  /**
-   * The observable through which this counter emits response events.
-   * @return the observable
-   */
-  def observable: Observable[(Int, ModelState)] = subject
+  lazy val postObserver = new HttpPostObserver(serviceUrl + "/counters/" + counterId + "/")
 
   private def TAG = "clickcounter-android-rxscala-http" // FIXME centralize
 
-  onCreate()
-
-  def parseJsonCounter(response: String): (Int, ModelState) = {
+  implicit def parseJsonCounter(response: String): Option[(Int, ModelState)] = Try {
     val jsonResponse = new JSONObject(response)
     val min = jsonResponse.getInt("min")
     val value = jsonResponse.getInt("value")
@@ -52,59 +44,11 @@ class BoundedCounterHttpProxy(serviceUrl: String, counterId: String) extends Obs
     else
       Full
     (value, state)
-  }
-
-  def HttpURLConnection(url: String): HttpURLConnection =
-    new URL(url).openConnection().asInstanceOf[HttpURLConnection]
-
-  def onCreate(): Unit = {
-    val resourceUrl = serviceUrl + "/counters/" + counterId + "/stream"
-    val buffer = new Array[Byte](1024)
-    val DATA_PREFIX = "data:"
-    val DATA_PREFIX_LENGTH = DATA_PREFIX.length
-
-    future {
-      while (true) {
-        var urlConnection: HttpURLConnection = null
-        try {
-          Log.d(TAG, "opening connection to " + resourceUrl)
-          urlConnection = HttpURLConnection(resourceUrl)
-          Log.d(TAG, "getting input stream")
-          val is = urlConnection.getInputStream
-          Log.d(TAG, "type of input stream is " + is.getClass.toString)
-          while (true) {
-            Log.d(TAG, "attempting to read")
-            val bytesRead = is.read(buffer)
-            val input = new String(buffer, 0, bytesRead)
-            Log.d(TAG, "read " + bytesRead + " bytes: " + input)
-            val pos = input.indexOf(DATA_PREFIX)
-            if (pos >= 0) {
-              try {
-                val sub = input.substring(DATA_PREFIX_LENGTH + pos)
-                Log.d(TAG, "extracting JSON from " + sub)
-                val (value, state) = parseJsonCounter(sub)
-                Log.d(TAG, "firing " +(value, state))
-                subject.onNext((value, state))
-                Log.d(TAG, "fired " +(value, state))
-              } catch {
-                case ex: Throwable =>
-                  Log.d(TAG, "error during JSON extraction: " + ex)
-              }
-            } else {
-              Log.d(TAG, "ignoring unknown message")
-            }
-          }
-        } catch {
-          case ex: Throwable =>
-            Log.d(TAG, "disconnecting on error: " + ex)
-            urlConnection.disconnect()
-        }
-      }
-    }
-  }
+  } toOption
 
   /**
-   * Provides the reactive behavior of this bounded counter.
+   * Provides the reactive behavior of this bounded counter
+   * by passing the event on to the remote service.
    * @param arg the current value along with an input event
    */
   override def onNext(arg: InputEvent) = {
@@ -113,16 +57,6 @@ class BoundedCounterHttpProxy(serviceUrl: String, counterId: String) extends Obs
       case Decrement => "decrement"
       case Reset     => "reset"
     }
-
-    val resourceUrl = serviceUrl + "/counters/" + counterId + "/" + resourceSuffix
-    Log.d(TAG, "opening connection to " + resourceUrl)
-
-    future {
-      val urlConnection = HttpURLConnection(resourceUrl)
-      urlConnection.setRequestMethod("POST")
-      Log.d(TAG, "getting response status")
-      val status = urlConnection.getResponseCode
-      Log.d(TAG, "got response status " + status)
-    }
+    postObserver.onNext(resourceSuffix)
   }
 }
