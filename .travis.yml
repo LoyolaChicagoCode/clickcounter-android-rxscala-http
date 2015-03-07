@@ -17,7 +17,8 @@ before_install:
 - tar -zxf android-sdk_r${ANDROID_SDK_VERSION}-linux.tgz
 - echo yes | ${ANDROID_HOME}/tools/android update sdk --filter tools,platform-tools,build-tools-${ANDROID_BUILD_TOOLS_VERSION},android-${ANDROID_API_LEVEL},extra-android-support,extra-android-m2repository,extra-google-m2repository
   --no-ui --force --no-https --all > /dev/null
-script: sbt coveralls
+script: sbt coverage
+after_success: sbt coveralls
 after_success:
 - |
   test "${TRAVIS_PULL_REQUEST}" = 'false' && PROJECT_VERSION=$(TERM=dumb sbt 'show version' | tail -n 1 | cut -c8- -) && BINTRAY_VERSION=${PROJECT_VERSION}.${TRAVIS_BUILD_NUMBER} && ./.bintray-credentials.sh && curl -H "Content-Type: application/json" -d "{ \"name\": \"${BINTRAY_VERSION}\" }" ${BINTRAY_API}/packages/${BINTRAY_ORG}/generic/${BINTRAY_PKG}/versions && sbt android:package && curl -T target/android-bin/${BINTRAY_PKG}-debug.apk "${BINTRAY_API}/content/${BINTRAY_ORG}/generic/${BINTRAY_PKG}/${BINTRAY_VERSION}/${BINTRAY_PKG}-${BINTRAY_VERSION}.apk;publish=1"
