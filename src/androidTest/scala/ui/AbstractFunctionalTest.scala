@@ -1,7 +1,7 @@
 package edu.luc.etl.cs313.scala.httpclickcounter.ui
 
 import org.junit.Assert._
-import org.junit.Test
+import org.junit.{Test, Ignore}
 
 /**
  * An abstract GUI-based functional test for the clickcounter app.
@@ -18,11 +18,13 @@ trait AbstractFunctionalTest {
     assertNotNull(activity)
   }
 
+  @Ignore
   @Test def testActivityInitialValue(): Unit = {
     val t = activity.findView(TR.textview_value)
     assertEquals(0, t.getText.toString.toInt)
   }
 
+  @Ignore
   @Test def testActivityScenarioIncReset(): Unit = {
     assertEquals(0, displayedValue)
     assertTrue(incButton.isEnabled)
@@ -40,6 +42,7 @@ trait AbstractFunctionalTest {
     assertTrue(resetButton.isEnabled)
   }
 
+  @Ignore
   @Test def testActivityScenarioIncUntilFull(): Unit = {
     assertEquals(0, displayedValue)
     assertTrue(incButton.isEnabled)

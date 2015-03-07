@@ -1,8 +1,10 @@
-<!---
-[![Build Status](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala) 
-[![Coverage Status](https://img.shields.io/coveralls/LoyolaChicagoCode/clickcounter-android-rxscala.svg)](https://coveralls.io/r/LoyolaChicagoCode/clickcounter-android-rxscala) 
-[![Download](https://api.bintray.com/packages/loyolachicagocode/generic/clickcounter-android-rxscala/images/download.svg) ](https://bintray.com/loyolachicagocode/generic/clickcounter-android-rxscala/_latestVersion)
--->
+[![Build Status](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala-http.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/clickcounter-android-rxscala-http) 
+[![Coverage Status](https://img.shields.io/coveralls/LoyolaChicagoCode/clickcounter-android-rxscala-http.svg)](https://coveralls.io/r/LoyolaChicagoCode/clickcounter-android-rxscala-http) 
+[![Download](https://api.bintray.com/packages/loyolachicagocode/generic/clickcounter-android-rxscala-http/images/download.svg) ](https://bintray.com/loyolachicagocode/generic/clickcounter-android-rxscala-http/_latestVersion)
+
+
+[![Issue Stats](http://issuestats.com/github/LoyolaChicagoCode/clickcounter-android-rxscala-http/badge/pr)](http://issuestats.com/github/LoyolaChicagoCode/clickcounter-android-rxscala-http)
+[![Issue Stats](http://issuestats.com/github/LoyolaChicagoCode/clickcounter-android-rxscala-http/badge/issue)](http://issuestats.com/github/LoyolaChicagoCode/clickcounter-android-rxscala-http)
 
 # Android Client for the RESTful Click Counter Service
 

@@ -68,13 +68,4 @@ apkbuildExcludes in Android ++= Seq(
   "META-INF/NOTICE.txt"
 )
 
-// The next few lines will work only with sbt-scoverage version 0.99.7.1.
-// Do not update until sbt-scoverage 1.0 stabilizes!
-
-instrumentSettings
-
-ScoverageKeys.excludedPackages in ScoverageCompile := """.*\.TR.*;.*\.TypedLayoutInflater;.*\.TypedResource;.*\.TypedViewHolder;.*\.TypedLayoutInflater"""
-
-org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
-
-managedClasspath in ScoverageCompile <++= androidJars
+ScoverageSbtPlugin.ScoverageKeys.coverageExcludedPackages := """.*\.TR.*;.*\.TypedLayoutInflater;.*\.TypedResource;.*\.TypedViewHolder;.*\.TypedLayoutInflater"""
