@@ -9,9 +9,10 @@
     <string name="label_decrement">-</string>
 
     <!-- The desired counter service is configured here. -->
-    <string name="counter_service_url">http://laufer-clickcounter.herokuapp.com</string> <!-- public/default -->
+    <string name="counter_service_url">http://laufer-dev.cs.luc.edu:8080</string> <!-- public/default -->
+    <string name="counter_service_url_heroku">http://laufer-clickcounter.herokuapp.com</string> <!-- public -->
     <string name="counter_service_url_apiary">http://private-14b8e-clickcounter.apiary-mock.com</string> <!-- mock -->
-    <string name="counter_service_url_local">http://rpi:8080</string> <!-- for local testing -->
+    <string name="counter_service_url_rpi">http://rpi:8080</string> <!-- for local testing -->
     <string name="counter_id">123</string>
 
 </resources>
